@@ -9,9 +9,9 @@
     }
     
     .page-hero {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #4f46e5, #7c3aed);
         color: white;
-        padding: 4rem 0 6rem 0;
+        padding: 5rem 0 7rem 0;
         position: relative;
         overflow: hidden;
     }
@@ -24,6 +24,17 @@
         right: 0;
         bottom: 0;
         background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="hero-pattern" width="40" height="40" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="10" cy="10" r="1" fill="rgba(255,255,255,0.05)"/><circle cx="30" cy="30" r="1" fill="rgba(255,255,255,0.05)"/></pattern></defs><rect width="100" height="100" fill="url(%23hero-pattern)"/></svg>');
+        opacity: 0.4;
+    }
+    
+    .page-hero::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 100px;
+        background: linear-gradient(180deg, transparent, rgba(248, 250, 252, 0.1));
     }
     
     .hero-content {
@@ -34,88 +45,80 @@
     
     .hero-title {
         font-size: 3.5rem;
-        font-weight: 800;
-        margin-bottom: 1rem;
-        text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        background: linear-gradient(135deg, #ffffff, #e2e8f0);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
     }
     
     .hero-subtitle {
         font-size: 1.25rem;
-        opacity: 0.9;
-        font-weight: 400;
-        max-width: 600px;
+        color: #e2e8f0;
+        max-width: 700px;
         margin: 0 auto;
+        line-height: 1.6;
+    }
+    
+    .hero-subtitle strong {
+        color: white;
+        font-weight: 600;
     }
     
     .form-container {
         background: white;
-        border-radius: 20px;
-        padding: 2rem;
-        margin: -3rem auto 0;
+        border-radius: 30px;
+        padding: 3rem;
+        margin: -4rem auto 0;
         position: relative;
         z-index: 3;
-        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.1);
         max-width: 1000px;
+        border: 1px solid #f1f5f9;
     }
     
-    .current-poster {
-        background: #f8fafc;
-        border-radius: 15px;
-        padding: 1.5rem;
-        border: 2px solid #f1f5f9;
-        margin-bottom: 1.5rem;
-        text-align: center;
-    }
-    
-    .current-poster img {
-        max-height: 200px;
-        border-radius: 12px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        border: 3px solid white;
-    }
-    
-    .current-poster-label {
-        font-weight: 600;
-        color: #374151;
-        margin-bottom: 1rem;
-        display: block;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.5rem;
-    }
-    
-    .current-poster-label i {
-        color: #667eea;
-    }
-    
-    /* Reuse styles from create.blade.php */
     .form-section {
-        margin-bottom: 2.5rem;
+        margin-bottom: 3rem;
+    }
+    
+    .form-section:last-child {
+        margin-bottom: 0;
     }
     
     .section-title {
-        font-size: 1.25rem;
+        font-size: 1.5rem;
         font-weight: 700;
         color: #1e293b;
-        margin-bottom: 1.5rem;
+        margin-bottom: 2rem;
         display: flex;
         align-items: center;
-        gap: 0.75rem;
-        padding-bottom: 0.75rem;
+        gap: 1rem;
+        padding-bottom: 1rem;
         border-bottom: 2px solid #f1f5f9;
+        position: relative;
+    }
+    
+    .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 60px;
+        height: 2px;
+        background: linear-gradient(135deg, #4f46e5, #7c3aed);
     }
     
     .section-title i {
-        width: 35px;
-        height: 35px;
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        border-radius: 10px;
+        width: 45px;
+        height: 45px;
+        background: linear-gradient(135deg, #4f46e5, #7c3aed);
+        border-radius: 15px;
         display: flex;
         align-items: center;
         justify-content: center;
         color: white;
-        font-size: 1rem;
+        font-size: 1.25rem;
     }
     
     .form-label {
@@ -125,27 +128,54 @@
         display: flex;
         align-items: center;
         gap: 0.5rem;
+        font-size: 0.95rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
     }
     
     .form-label i {
-        color: #667eea;
-        font-size: 0.875rem;
+        color: #4f46e5;
+        font-size: 1rem;
     }
     
     .form-control, .form-select {
         border: 2px solid #e5e7eb;
-        border-radius: 12px;
-        padding: 0.875rem 1rem;
+        border-radius: 15px;
+        padding: 1rem 1.25rem;
         font-size: 1rem;
         transition: all 0.3s ease;
-        background-color: #fafbfc;
+        background-color: #f9fafb;
+        font-weight: 500;
     }
     
     .form-control:focus, .form-select:focus {
-        border-color: #667eea;
-        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        border-color: #4f46e5;
+        box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
         background-color: white;
         outline: none;
+    }
+    
+    .form-control:hover, .form-select:hover {
+        border-color: #9ca3af;
+        background-color: white;
+    }
+    
+    .form-control.is-invalid {
+        border-color: #ef4444;
+        background-color: #fef2f2;
+    }
+    
+    .invalid-feedback {
+        color: #ef4444;
+        font-size: 0.875rem;
+        margin-top: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .invalid-feedback i {
+        font-size: 0.875rem;
     }
     
     .form-text {
@@ -158,49 +188,193 @@
     }
     
     .form-text i {
-        color: #667eea;
+        color: #4f46e5;
+    }
+    
+    .current-poster {
+        background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+        border-radius: 20px;
+        padding: 2rem;
+        border: 2px solid #e2e8f0;
+        margin-bottom: 2rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .current-poster::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    }
+    
+    .current-poster-label {
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
+        font-size: 1.1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .current-poster-label i {
+        color: #4f46e5;
+        font-size: 1.25rem;
+    }
+    
+    .current-poster img {
+        max-height: 250px;
+        border-radius: 15px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        border: 4px solid white;
+        transition: transform 0.3s ease;
+    }
+    
+    .current-poster img:hover {
+        transform: scale(1.05);
     }
     
     .file-upload-container {
         position: relative;
-        border: 2px dashed #d1d5db;
-        border-radius: 12px;
-        padding: 2rem;
+        border: 3px dashed #d1d5db;
+        border-radius: 20px;
+        padding: 3rem 2rem;
         text-align: center;
-        background: #fafbfc;
+        background: #f9fafb;
         transition: all 0.3s ease;
         cursor: pointer;
     }
     
     .file-upload-container:hover {
-        border-color: #667eea;
+        border-color: #4f46e5;
         background: #f8faff;
     }
     
+    .file-upload-container.dragover {
+        border-color: #4f46e5;
+        background: #eef2ff;
+        transform: scale(1.02);
+    }
+    
     .file-upload-icon {
-        width: 60px;
-        height: 60px;
+        width: 80px;
+        height: 80px;
         background: linear-gradient(135deg, #eef2ff, #e0e7ff);
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        margin: 0 auto 1rem;
-        color: #667eea;
-        font-size: 1.5rem;
+        margin: 0 auto 1.5rem;
+        color: #4f46e5;
+        font-size: 2rem;
+        transition: all 0.3s ease;
+    }
+    
+    .file-upload-container:hover .file-upload-icon {
+        transform: scale(1.1);
+        background: linear-gradient(135deg, #4f46e5, #7c3aed);
+        color: white;
+    }
+    
+    .file-upload-text {
+        color: #6b7280;
+        margin-bottom: 0.5rem;
+        font-size: 1.1rem;
+    }
+    
+    .file-upload-text strong {
+        color: #4f46e5;
+        font-weight: 600;
+    }
+    
+    .file-upload-hint {
+        color: #9ca3af;
+        font-size: 0.875rem;
+    }
+    
+    #poster {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        cursor: pointer;
+    }
+    
+    .image-preview {
+        margin-top: 1.5rem;
+        text-align: center;
+        display: none;
+    }
+    
+    .image-preview-container {
+        position: relative;
+        display: inline-block;
+    }
+    
+    .image-preview img {
+        max-width: 250px;
+        max-height: 250px;
+        border-radius: 20px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        border: 4px solid white;
+    }
+    
+    .remove-image {
+        position: absolute;
+        top: -15px;
+        right: -15px;
+        background: linear-gradient(135deg, #ef4444, #dc2626);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 1rem;
+        box-shadow: 0 5px 15px rgba(239, 68, 68, 0.4);
+        transition: all 0.3s ease;
+    }
+    
+    .remove-image:hover {
+        transform: scale(1.1);
+        box-shadow: 0 8px 25px rgba(239, 68, 68, 0.5);
     }
     
     .alert-danger {
         background: linear-gradient(135deg, #fef2f2, #fee2e2);
-        border: 1px solid #fecaca;
-        border-radius: 12px;
+        border: 2px solid #fecaca;
+        border-radius: 15px;
         padding: 1.5rem;
         margin-bottom: 2rem;
     }
     
+    .alert-danger ul {
+        margin: 0;
+        padding-left: 1.5rem;
+    }
+    
+    .alert-danger li {
+        color: #dc2626;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+    }
+    
     .btn-group-custom {
         display: flex;
-        gap: 1rem;
+        gap: 1.5rem;
         justify-content: space-between;
         align-items: center;
         margin-top: 3rem;
@@ -209,49 +383,117 @@
     }
     
     .btn-custom {
-        padding: 0.875rem 2rem;
+        padding: 1rem 2.5rem;
         font-weight: 600;
-        border-radius: 25px;
+        border-radius: 50px;
         transition: all 0.3s ease;
         text-decoration: none;
         display: flex;
         align-items: center;
-        gap: 0.5rem;
+        gap: 0.75rem;
         border: none;
         cursor: pointer;
-        font-size: 0.95rem;
+        font-size: 1rem;
     }
     
     .btn-primary-custom {
-        background: linear-gradient(135deg, #667eea, #764ba2);
+        background: linear-gradient(135deg, #4f46e5, #7c3aed);
         color: white;
-        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        box-shadow: 0 5px 15px rgba(79, 70, 229, 0.3);
     }
     
     .btn-primary-custom:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(79, 70, 229, 0.4);
         color: white;
+        background: linear-gradient(135deg, #4338ca, #6d28d9);
     }
     
     .btn-secondary-custom {
-        background: #f8fafc;
+        background: white;
         border: 2px solid #e2e8f0;
         color: #64748b;
     }
     
     .btn-secondary-custom:hover {
-        background: #f1f5f9;
+        background: #f8fafc;
         border-color: #cbd5e1;
         color: #475569;
         text-decoration: none;
-        transform: translateY(-1px);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     }
     
     .form-row {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 1.5rem;
+        gap: 2rem;
+    }
+    
+    .categories-container {
+        background: #f8fafc;
+        border-radius: 15px;
+        padding: 1.5rem;
+        border: 2px solid #e2e8f0;
+    }
+    
+    .categories-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+    
+    .category-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem;
+        background: white;
+        border-radius: 10px;
+        border: 1px solid #e5e7eb;
+        transition: all 0.3s ease;
+    }
+    
+    .category-item:hover {
+        border-color: #4f46e5;
+        background: #f8faff;
+    }
+    
+    .category-item.selected {
+        border-color: #4f46e5;
+        background: linear-gradient(135deg, #eef2ff, #e0e7ff);
+    }
+    
+    .category-item input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        accent-color: #4f46e5;
+    }
+    
+    .category-item label {
+        margin: 0;
+        font-weight: 500;
+        color: #374151;
+        cursor: pointer;
+    }
+    
+    .update-indicator {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: linear-gradient(135deg, #10b981, #059669);
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 50px;
+        box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+        transform: translateX(400px);
+        transition: transform 0.3s ease;
+        z-index: 1000;
+    }
+    
+    .update-indicator.show {
+        transform: translateX(0);
     }
     
     @media (max-width: 768px) {
@@ -260,12 +502,14 @@
         }
         
         .form-container {
-            margin: -2rem 1rem 0;
-            padding: 1.5rem;
+            margin: -3rem 1rem 0;
+            padding: 2rem;
+            border-radius: 25px;
         }
         
         .form-row {
             grid-template-columns: 1fr;
+            gap: 1.5rem;
         }
         
         .btn-group-custom {
@@ -276,6 +520,10 @@
         .btn-custom {
             width: 100%;
             justify-content: center;
+        }
+        
+        .categories-grid {
+            grid-template-columns: 1fr;
         }
     }
 </style>
@@ -298,20 +546,17 @@
 <div class="container">
     <div class="form-container">
         @if ($errors->any())
-        <div class="alert alert-danger">
-            <h6 class="fw-bold mb-2">
-                <i class="fas fa-exclamation-triangle me-2"></i>
-                Terdapat kesalahan dalam pengisian form:
-            </h6>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
+            <div class="alert-danger">
+                <h5><i class="fas fa-exclamation-triangle me-2"></i>Terdapat kesalahan dalam form:</h5>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
         @endif
 
-        <form action="{{ route('films.update', $film->id) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('films.update', $film) }}" method="POST" enctype="multipart/form-data" id="filmForm">
             @csrf
             @method('PUT')
             
@@ -322,64 +567,123 @@
                     Informasi Dasar
                 </h3>
                 
-                <div class="form-row">
-                    <div class="mb-3">
-                        <label for="title" class="form-label">
-                            <i class="fas fa-film"></i>
-                            Judul Film
-                        </label>
-                        <input type="text" class="form-control" id="title" name="title" 
-                               value="{{ old('title', $film->title) }}" required 
-                               placeholder="Masukkan judul film">
-                    </div>
-                    
-                    <div class="mb-3">
-                        <label for="director" class="form-label">
-                            <i class="fas fa-user-tie"></i>
-                            Sutradara
-                        </label>
-                        <input type="text" class="form-control" id="director" name="director" 
-                               value="{{ old('director', $film->director) }}" required 
-                               placeholder="Nama sutradara">
-                    </div>
+                <div class="mb-4">
+                    <label for="title" class="form-label">
+                        <i class="fas fa-film"></i>
+                        Judul Film
+                    </label>
+                    <input type="text" 
+                           class="form-control @error('title') is-invalid @enderror" 
+                           id="title" 
+                           name="title" 
+                           value="{{ old('title', $film->title) }}" 
+                           required
+                           placeholder="Masukkan judul film">
+                    @error('title')
+                        <div class="invalid-feedback">
+                            <i class="fas fa-exclamation-circle"></i>
+                            {{ $message }}
+                        </div>
+                    @enderror
                 </div>
-                
-                <div class="form-row">
-                    <div class="mb-3">
-                        <label for="release_year" class="form-label">
-                            <i class="fas fa-calendar-alt"></i>
-                            Tahun Rilis
-                        </label>
-                        <input type="number" class="form-control" id="release_year" name="release_year" 
-                               value="{{ old('release_year', $film->release_year) }}" min="1900" max="{{ date('Y') + 1 }}" required>
-                    </div>
-                    
-                    <div class="mb-3">
-                        <label for="genre" class="form-label">
-                            <i class="fas fa-tags"></i>
-                            Genre
-                        </label>
-                        <input type="text" class="form-control" id="genre" name="genre" 
-                               value="{{ old('genre', $film->genre) }}" required 
-                               placeholder="Contoh: Action, Drama, Comedy">
+
+                <div class="mb-4">
+                    <label for="description" class="form-label">
+                        <i class="fas fa-align-left"></i>
+                        Deskripsi
+                    </label>
+                    <textarea class="form-control @error('description') is-invalid @enderror" 
+                              id="description" 
+                              name="description" 
+                              rows="5" 
+                              required
+                              placeholder="Ceritakan tentang film ini...">{{ old('description', $film->description) }}</textarea>
+                    @error('description')
+                        <div class="invalid-feedback">
+                            <i class="fas fa-exclamation-circle"></i>
+                            {{ $message }}
+                        </div>
+                    @enderror
+                    <div class="form-text">
+                        <i class="fas fa-info-circle"></i>
+                        Berikan deskripsi yang menarik tentang alur cerita film
                     </div>
                 </div>
             </div>
 
-            <!-- Description Section -->
+            <!-- Details Section -->
             <div class="form-section">
                 <h3 class="section-title">
-                    <i class="fas fa-align-left"></i>
-                    Deskripsi Film
+                    <i class="fas fa-cog"></i>
+                    Detail Film
                 </h3>
                 
-                <div class="mb-3">
-                    <label for="description" class="form-label">
-                        <i class="fas fa-file-alt"></i>
-                        Deskripsi
+                <div class="form-row">
+                    <div class="mb-4">
+                        <label for="director" class="form-label">
+                            <i class="fas fa-user-tie"></i>
+                            Sutradara
+                        </label>
+                        <input type="text" 
+                               class="form-control @error('director') is-invalid @enderror" 
+                               id="director" 
+                               name="director" 
+                               value="{{ old('director', $film->director) }}" 
+                               required
+                               placeholder="Nama sutradara">
+                        @error('director')
+                            <div class="invalid-feedback">
+                                <i class="fas fa-exclamation-circle"></i>
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="release_year" class="form-label">
+                            <i class="fas fa-calendar-alt"></i>
+                            Tahun Rilis
+                        </label>
+                        <input type="number" 
+                               class="form-control @error('release_year') is-invalid @enderror" 
+                               id="release_year" 
+                               name="release_year" 
+                               value="{{ old('release_year', $film->release_year) }}" 
+                               min="1900" 
+                               max="{{ date('Y') + 1 }}" 
+                               required
+                               placeholder="{{ date('Y') }}">
+                        @error('release_year')
+                            <div class="invalid-feedback">
+                                <i class="fas fa-exclamation-circle"></i>
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label for="genre" class="form-label">
+                        <i class="fas fa-tags"></i>
+                        Genre
                     </label>
-                    <textarea class="form-control" id="description" name="description" rows="5" required 
-                              placeholder="Ceritakan tentang film ini...">{{ old('description', $film->description) }}</textarea>
+                    <input type="text" 
+                           class="form-control @error('genre') is-invalid @enderror" 
+                           id="genre" 
+                           name="genre" 
+                           value="{{ old('genre', $film->genre) }}" 
+                           required
+                           placeholder="Contoh: Action, Drama, Comedy">
+                    @error('genre')
+                        <div class="invalid-feedback">
+                            <i class="fas fa-exclamation-circle"></i>
+                            {{ $message }}
+                        </div>
+                    @enderror
+                    <div class="form-text">
+                        <i class="fas fa-lightbulb"></i>
+                        Pisahkan dengan koma jika lebih dari satu genre
+                    </div>
                 </div>
             </div>
 
@@ -390,61 +694,97 @@
                     Media & Kategori
                 </h3>
                 
-                @if($film->poster)
-                <div class="current-poster">
-                    <label class="current-poster-label">
-                        <i class="fas fa-image"></i>
-                        Poster Saat Ini:
-                    </label>
-                    <img src="{{ asset('storage/' . $film->poster) }}" alt="{{ $film->title }}">
-                </div>
-                @endif
-                
                 <div class="mb-4">
                     <label for="poster" class="form-label">
                         <i class="fas fa-camera"></i>
-                        Poster Film Baru
+                        Poster Film
                     </label>
+                    
+                    @if($film->poster)
+                        <div class="current-poster">
+                            <div class="current-poster-label">
+                                <i class="fas fa-image"></i>
+                                Poster Saat Ini
+                            </div>
+                            <img src="{{ asset('storage/' . $film->poster) }}" 
+                                 alt="Current poster for {{ $film->title }}">
+                        </div>
+                    @endif
+                    
                     <div class="file-upload-container" onclick="document.getElementById('poster').click()">
                         <div class="file-upload-icon">
                             <i class="fas fa-cloud-upload-alt"></i>
                         </div>
                         <div class="file-upload-text">
-                            <strong>Klik untuk upload poster baru</strong> atau biarkan kosong jika tidak ingin mengubah
+                            <strong>Klik untuk upload poster baru</strong> atau drag & drop file di sini
                         </div>
-                        <div class="form-text">
-                            <i class="fas fa-info-circle"></i>
-                            Format yang didukung: JPG, PNG, GIF (Maks. 2MB)
+                        <div class="file-upload-hint">
+                            Format: JPG, PNG, GIF (Max: 2MB) - Kosongkan jika tidak ingin mengubah poster
                         </div>
-                        <input type="file" class="form-control" id="poster" name="poster" accept="image/*" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer;">
+                        <input type="file" 
+                               class="@error('poster') is-invalid @enderror" 
+                               id="poster" 
+                               name="poster" 
+                               accept="image/*">
                     </div>
+                    
+                    <div class="image-preview" id="imagePreview">
+                        <div class="image-preview-container">
+                            <img id="previewImg" src="/placeholder.svg" alt="Preview">
+                            <button type="button" class="remove-image" onclick="removeImage()">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    @error('poster')
+                        <div class="invalid-feedback d-block">
+                            <i class="fas fa-exclamation-circle"></i>
+                            {{ $message }}
+                        </div>
+                    @enderror
                 </div>
-                
-                <div class="mb-3">
-                    <label for="categories" class="form-label">
-                        <i class="fas fa-list"></i>
-                        Kategori
+
+                <div class="mb-4">
+                    <label class="form-label">
+                        <i class="fas fa-th-large"></i>
+                        Kategori Film
                     </label>
-                    <select name="categories[]" id="categories" class="form-select" multiple>
-                        @foreach ($categories as $category)
-                            <option value="{{ $category->id }}" 
-                                    {{ in_array($category->id, old('categories', $film->categories->pluck('id')->toArray())) ? 'selected' : '' }}>
-                                {{ $category->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                    <div class="form-text">
-                        <i class="fas fa-info-circle"></i>
-                        Tahan Ctrl (Windows) atau Cmd (Mac) untuk memilih multiple kategori
+                    <div class="categories-container">
+                        <div class="form-text mb-3">
+                            <i class="fas fa-info-circle"></i>
+                            Pilih satu atau lebih kategori yang sesuai dengan film
+                        </div>
+                        <div class="categories-grid">
+                            @foreach($categories as $category)
+                                <div class="category-item {{ in_array($category->id, old('categories', $film->categories->pluck('id')->toArray())) ? 'selected' : '' }}">
+                                    <input type="checkbox" 
+                                           id="category_{{ $category->id }}" 
+                                           name="categories[]" 
+                                           value="{{ $category->id }}"
+                                           {{ in_array($category->id, old('categories', $film->categories->pluck('id')->toArray())) ? 'checked' : '' }}
+                                           onchange="toggleCategorySelection(this)">
+                                    <label for="category_{{ $category->id }}">
+                                        {{ $category->name }}
+                                    </label>
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
+                    @error('categories')
+                        <div class="invalid-feedback d-block">
+                            <i class="fas fa-exclamation-circle"></i>
+                            {{ $message }}
+                        </div>
+                    @enderror
                 </div>
             </div>
 
             <!-- Action Buttons -->
             <div class="btn-group-custom">
-                <a href="{{ route('films.index') }}" class="btn-custom btn-secondary-custom">
+                <a href="{{ route('films.show', $film) }}" class="btn-custom btn-secondary-custom">
                     <i class="fas fa-arrow-left"></i>
-                    Kembali
+                    Kembali ke Detail
                 </a>
                 <button type="submit" class="btn-custom btn-primary-custom">
                     <i class="fas fa-save"></i>
@@ -455,4 +795,138 @@
     </div>
 </div>
 
-@endsection 
+<!-- Update Indicator -->
+<div class="update-indicator" id="updateIndicator">
+    <i class="fas fa-check-circle me-2"></i>
+    Film berhasil diperbarui!
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const posterInput = document.getElementById('poster');
+    const imagePreview = document.getElementById('imagePreview');
+    const previewImg = document.getElementById('previewImg');
+    const fileUploadContainer = document.querySelector('.file-upload-container');
+    
+    // File input change event
+    if (posterInput) {
+        posterInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                // Validate file size (2MB)
+                if (file.size > 2 * 1024 * 1024) {
+                    alert('Ukuran file terlalu besar. Maksimal 2MB.');
+                    this.value = '';
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    if (previewImg) previewImg.src = e.target.result;
+                    if (imagePreview) imagePreview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+
+    // Drag and drop functionality
+    if (fileUploadContainer) {
+        fileUploadContainer.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            this.classList.add('dragover');
+        });
+        
+        fileUploadContainer.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            this.classList.remove('dragover');
+        });
+        
+        fileUploadContainer.addEventListener('drop', function(e) {
+            e.preventDefault();
+            this.classList.remove('dragover');
+            
+            const files = e.dataTransfer.files;
+            if (files.length > 0 && posterInput) {
+                posterInput.files = files;
+                posterInput.dispatchEvent(new Event('change'));
+            }
+        });
+    }
+    
+    // Form validation and submission
+    const filmForm = document.getElementById('filmForm');
+    if (filmForm) {
+        filmForm.addEventListener('submit', function(e) {
+            const title = document.getElementById('title').value.trim();
+            const director = document.getElementById('director').value.trim();
+            const description = document.getElementById('description').value.trim();
+            const releaseYear = document.getElementById('release_year').value;
+            const genre = document.getElementById('genre').value.trim();
+            
+            if (!title || !director || !description || !releaseYear || !genre) {
+                e.preventDefault();
+                alert('Mohon lengkapi semua field yang wajib diisi!');
+                return;
+            }
+            
+            // Show loading state
+            const submitBtn = this.querySelector('button[type="submit"]');
+            if (submitBtn) {
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Memperbarui...';
+                submitBtn.disabled = true;
+            }
+        });
+    }
+    
+    // Show success indicator if redirected after update
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('updated') === 'true') {
+        showUpdateIndicator();
+    }
+});
+
+function removeImage() {
+    const posterInput = document.getElementById('poster');
+    const imagePreview = document.getElementById('imagePreview');
+
+    if (posterInput) posterInput.value = '';
+    if (imagePreview) imagePreview.style.display = 'none';
+}
+
+function toggleCategorySelection(checkbox) {
+    const categoryItem = checkbox.closest('.category-item');
+    if (checkbox.checked) {
+        categoryItem.classList.add('selected');
+    } else {
+        categoryItem.classList.remove('selected');
+    }
+}
+
+function showUpdateIndicator() {
+    const indicator = document.getElementById('updateIndicator');
+    if (indicator) {
+        indicator.classList.add('show');
+        setTimeout(() => {
+            indicator.classList.remove('show');
+        }, 3000);
+    }
+}
+
+// Auto-save draft functionality (optional)
+let autoSaveTimeout;
+function autoSaveDraft() {
+    clearTimeout(autoSaveTimeout);
+    autoSaveTimeout = setTimeout(() => {
+        // Implement auto-save logic here if needed
+        console.log('Auto-saving draft...');
+    }, 2000);
+}
+
+// Add auto-save listeners to form inputs
+document.querySelectorAll('#filmForm input, #filmForm textarea').forEach(input => {
+    input.addEventListener('input', autoSaveDraft);
+});
+</script>
+
+@endsection

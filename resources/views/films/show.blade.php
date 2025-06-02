@@ -1,37 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mt-5">
-    <h2 class="mb-4">{{ $film->title }}</h2>
-
-    <div class="row">
-        <div class="col-md-4">
-            <img src="{{ asset('storage/' . $film->poster) }}" alt="{{ $film->title }}" class="img-fluid rounded shadow-sm">
-        </div>
-
-        <div class="col-md-8">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h5 class="card-title mb-0">{{ $film->title }} ({{ $film->release_year }})</h5>
-                        <div>
-                            <a href="{{ route('films.edit', $film) }}" class="btn btn-sm btn-warning">Edit</a>
-                            <form action="{{ route('films.destroy', $film) }}" method="POST" class="d-inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
-                            </form>
-                        </div>
-                    </div>
-
-                    <p><strong>Director:</strong> {{ $film->director }}</p>
-                    <p><strong>Genre:</strong> {{ $film->genre }}</p>
-                    <p><strong>Release Year:</strong> {{ $film->release_year }}</p>
-
-                    <div class="mt-4">
-                        <h5>Deskripsi</h5>@extends('layouts.app')
-
-@section('content')
 
 <style>
     main {
@@ -40,9 +9,9 @@
     }
     
     .page-hero {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #4f46e5, #7c3aed);
         color: white;
-        padding: 4rem 0 6rem 0;
+        padding: 3rem 0 5rem 0;
         position: relative;
         overflow: hidden;
     }
@@ -55,6 +24,17 @@
         right: 0;
         bottom: 0;
         background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="hero-pattern" width="40" height="40" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="10" cy="10" r="1" fill="rgba(255,255,255,0.05)"/><circle cx="30" cy="30" r="1" fill="rgba(255,255,255,0.05)"/></pattern></defs><rect width="100" height="100" fill="url(%23hero-pattern)"/></svg>');
+        opacity: 0.4;
+    }
+    
+    .page-hero::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 80px;
+        background: linear-gradient(180deg, transparent, rgba(248, 250, 252, 0.1));
     }
     
     .hero-content {
@@ -64,294 +44,382 @@
     }
     
     .hero-title {
-        font-size: 3.5rem;
-        font-weight: 800;
+        font-size: 3rem;
+        font-weight: 700;
         margin-bottom: 1rem;
-        text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-    
-    .hero-subtitle {
-        font-size: 1.25rem;
-        opacity: 0.9;
-        font-weight: 400;
-        max-width: 600px;
-        margin: 0 auto;
-    }
-    
-    .content-container {
-        margin: -3rem auto 3rem;
-        position: relative;
-        z-index: 3;
-        max-width: 1200px;
-    }
-    
-    .film-poster {
-        border-radius: 15px;
-        overflow: hidden;
-        box-shadow: 0 15px 35px rgba(0,0,0,0.15);
-        background: #f8fafc;
-        height: 500px;
-    }
-    
-    .film-poster img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.3s ease;
-    }
-    
-    .film-poster:hover img {
-        transform: scale(1.02);
-    }
-    
-    .no-image-placeholder {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100%;
-        color: #94a3b8;
-        flex-direction: column;
-        gap: 1rem;
-        background: linear-gradient(135deg, #f8fafc, #f1f5f9);
-    }
-    
-    .no-image-placeholder i {
-        font-size: 4rem;
-        opacity: 0.5;
-    }
-    
-    .film-info-card {
-        background: white;
-        border-radius: 20px;
-        padding: 2.5rem;
-        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-        border: 1px solid #f1f5f9;
-        height: 100%;
-    }
-    
-    .film-title-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        margin-bottom: 2rem;
-        padding-bottom: 1rem;
-        border-bottom: 2px solid #f1f5f9;
-    }
-    
-    .film-title {
-        font-size: 2rem;
-        font-weight: 800;
-        color: #1e293b;
-        margin: 0;
-        background: linear-gradient(135deg, #667eea, #764ba2);
+        background: linear-gradient(135deg, #ffffff, #e2e8f0);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.1rem;
+        color: #e2e8f0;
+        max-width: 600px;
+        margin: 0 auto;
+        line-height: 1.6;
+    }
+    
+    .film-container {
+        background: white;
+        border-radius: 30px;
+        padding: 3rem;
+        margin: -3rem auto 0;
+        position: relative;
+        z-index: 3;
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.1);
+        border: 1px solid #f1f5f9;
+    }
+    
+    .poster-container {
+        position: relative;
+        border-radius: 25px;
+        overflow: hidden;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+        border: 4px solid white;
+    }
+    
+    .poster-container img {
+        width: 100%;
+        height: auto;
+        display: block;
+        transition: transform 0.3s ease;
+    }
+    
+    .poster-container:hover img {
+        transform: scale(1.05);
+    }
+    
+    .no-poster {
+        aspect-ratio: 2/3;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        color: #94a3b8;
+        background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+    }
+    
+    .no-poster i {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+        opacity: 0.5;
+    }
+    
+    .no-poster span {
+        font-weight: 600;
+        font-size: 1.1rem;
+    }
+    
+    .film-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #1e293b;
+        margin-bottom: 2rem;
         line-height: 1.2;
     }
     
-    .film-year {
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        color: white;
-        padding: 0.5rem 1rem;
-        border-radius: 20px;
-        font-weight: 600;
-        font-size: 0.875rem;
-        margin-top: 0.5rem;
-        display: inline-block;
+    .film-meta {
+        margin-bottom: 2.5rem;
     }
     
-    .action-buttons {
+    .meta-item {
         display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+        padding: 1rem 1.5rem;
+        background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+        border-radius: 15px;
+        border: 1px solid #e2e8f0;
+        transition: all 0.3s ease;
+    }
+    
+    .meta-item:hover {
+        background: linear-gradient(135deg, #eef2ff, #e0e7ff);
+        border-color: #4f46e5;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(79, 70, 229, 0.1);
+    }
+    
+    .meta-icon {
+        width: 45px;
+        height: 45px;
+        background: linear-gradient(135deg, #4f46e5, #7c3aed);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.1rem;
+        flex-shrink: 0;
+    }
+    
+    .meta-content {
+        flex: 1;
+    }
+    
+    .meta-label {
+        font-size: 0.875rem;
+        color: #64748b;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 0.25rem;
+    }
+    
+    .meta-value {
+        font-size: 1.1rem;
+        color: #1e293b;
+        font-weight: 600;
+    }
+    
+    .rating-section {
+        background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+        border-radius: 20px;
+        padding: 2rem;
+        margin-bottom: 2.5rem;
+        border: 2px solid #e2e8f0;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .rating-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    }
+    
+    .rating-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #1e293b;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         gap: 0.75rem;
     }
     
-    .btn-custom {
-        padding: 0.5rem 1.25rem;
-        font-weight: 600;
-        border-radius: 20px;
-        transition: all 0.3s ease;
-        text-decoration: none;
+    .rating-title i {
+        color: #4f46e5;
+        font-size: 1.5rem;
+    }
+    
+    .rating-display {
         display: flex;
         align-items: center;
-        gap: 0.5rem;
-        border: none;
-        cursor: pointer;
-        font-size: 0.875rem;
-    }
-    
-    .btn-warning-custom {
-        background: #f59e0b;
-        color: white;
-        box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
-    }
-    
-    .btn-warning-custom:hover {
-        background: #d97706;
-        color: white;
-        text-decoration: none;
-        transform: translateY(-2px);
-    }
-    
-    .btn-danger-custom {
-        background: #ef4444;
-        color: white;
-        box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
-    }
-    
-    .btn-danger-custom:hover {
-        background: #dc2626;
-        transform: translateY(-2px);
-    }
-    
-    .film-details {
-        margin-bottom: 2rem;
-    }
-    
-    .detail-item {
-        display: flex;
+        justify-content: center;
+        gap: 1rem;
         margin-bottom: 1rem;
-        padding: 0.75rem 0;
-        border-bottom: 1px solid #f1f5f9;
     }
     
-    .detail-item:last-child {
-        border-bottom: none;
-    }
-    
-    .detail-label {
-        font-weight: 600;
-        color: #667eea;
-        min-width: 120px;
+    .rating-stars {
         display: flex;
-        align-items: center;
-        gap: 0.5rem;
+        gap: 0.25rem;
     }
     
-    .detail-label i {
-        font-size: 0.875rem;
+    .rating-stars i {
+        font-size: 1.5rem;
+        color: #fbbf24;
+        text-shadow: 0 2px 4px rgba(251, 191, 36, 0.3);
+        transition: transform 0.2s ease;
     }
     
-    .detail-value {
-        color: #374151;
+    .rating-stars i:hover {
+        transform: scale(1.2);
+    }
+    
+    .rating-stars i.fa-star-o {
+        color: #d1d5db;
+    }
+    
+    .rating-number {
+        font-size: 2rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, #4f46e5, #7c3aed);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    
+    .rating-count {
+        color: #64748b;
+        font-size: 0.9rem;
         font-weight: 500;
     }
     
     .description-section {
-        margin: 2rem 0;
+        margin-bottom: 2.5rem;
     }
     
     .section-title {
-        font-size: 1.25rem;
+        font-size: 1.5rem;
         font-weight: 700;
         color: #1e293b;
-        margin-bottom: 1rem;
+        margin-bottom: 1.5rem;
         display: flex;
         align-items: center;
         gap: 0.75rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid #f1f5f9;
+        position: relative;
+    }
+    
+    .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 60px;
+        height: 2px;
+        background: linear-gradient(135deg, #4f46e5, #7c3aed);
     }
     
     .section-title i {
-        color: #667eea;
+        color: #4f46e5;
+        font-size: 1.25rem;
     }
     
     .description-text {
-        color: #64748b;
+        font-size: 1.1rem;
         line-height: 1.7;
-        margin: 0;
-        font-size: 1rem;
+        color: #374151;
+        background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+        padding: 2rem;
+        border-radius: 15px;
+        border: 1px solid #e2e8f0;
     }
     
-    .categories-section {
-        margin: 2rem 0;
+    .action-buttons {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 2.5rem;
+        flex-wrap: wrap;
     }
     
-    .category-badge {
-        background: linear-gradient(135deg, #eef2ff, #e0e7ff);
-        color: #667eea;
-        padding: 0.5rem 1rem;
-        border-radius: 20px;
+    .btn-custom {
+        padding: 1rem 2rem;
         font-weight: 600;
-        margin-right: 0.5rem;
-        margin-bottom: 0.5rem;
-        display: inline-block;
-        border: 2px solid #e0e7ff;
+        border-radius: 50px;
         transition: all 0.3s ease;
-        font-size: 0.875rem;
-    }
-    
-    .category-badge:hover {
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        color: white;
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
-    }
-    
-    .back-button {
-        margin-top: 2rem;
-        padding-top: 2rem;
-        border-top: 2px solid #f1f5f9;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        border: none;
+        cursor: pointer;
+        font-size: 1rem;
+        white-space: nowrap;
     }
     
     .btn-primary-custom {
-        background: linear-gradient(135deg, #667eea, #764ba2);
+        background: linear-gradient(135deg, #4f46e5, #7c3aed);
         color: white;
-        padding: 0.75rem 2rem;
-        font-weight: 600;
-        border-radius: 25px;
-        transition: all 0.3s ease;
-        text-decoration: none;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        box-shadow: 0 5px 15px rgba(79, 70, 229, 0.3);
     }
     
     .btn-primary-custom:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(79, 70, 229, 0.4);
         color: white;
-        text-decoration: none;
+        background: linear-gradient(135deg, #4338ca, #6d28d9);
     }
     
-    .comments-section {
+    .btn-success-custom {
+        background: linear-gradient(135deg, #10b981, #059669);
+        color: white;
+        box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+    }
+    
+    .btn-success-custom:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);
+        color: white;
+        background: linear-gradient(135deg, #059669, #047857);
+    }
+    
+    .btn-warning-custom {
+        background: linear-gradient(135deg, #f59e0b, #d97706);
+        color: white;
+        box-shadow: 0 5px 15px rgba(245, 158, 11, 0.3);
+    }
+    
+    .btn-warning-custom:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(245, 158, 11, 0.4);
+        color: white;
+        background: linear-gradient(135deg, #d97706, #b45309);
+    }
+    
+    .btn-danger-custom {
+        background: linear-gradient(135deg, #ef4444, #dc2626);
+        color: white;
+        box-shadow: 0 5px 15px rgba(239, 68, 68, 0.3);
+    }
+    
+    .btn-danger-custom:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(239, 68, 68, 0.4);
+        background: linear-gradient(135deg, #dc2626, #b91c1c);
+    }
+    
+    .btn-secondary-custom {
         background: white;
-        border-radius: 20px;
-        padding: 2.5rem;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-        border: 1px solid #f1f5f9;
-        max-width: 1200px;
-        margin: 0 auto;
+        border: 2px solid #e2e8f0;
+        color: #64748b;
     }
     
-    .comments-header {
+    .btn-secondary-custom:hover {
         background: #f8fafc;
-        padding: 1.5rem;
-        border-radius: 15px;
-        margin-bottom: 2rem;
-        border-left: 4px solid #667eea;
+        border-color: #cbd5e1;
+        color: #475569;
+        text-decoration: none;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     }
     
-    .comments-title {
-        color: #1e293b;
-        font-weight: 700;
-        margin: 0;
+    .rating-form-card, .reviews-card {
+        background: white;
+        border-radius: 25px;
+        padding: 2.5rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+        border: 1px solid #f1f5f9;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .rating-form-card::before, .reviews-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    }
+    
+    .card-title {
         font-size: 1.5rem;
+        font-weight: 700;
+        color: #1e293b;
+        margin-bottom: 2rem;
         display: flex;
         align-items: center;
         gap: 0.75rem;
     }
     
-    .comments-title i {
-        color: #667eea;
-    }
-    
-    .comment-form {
-        background: #f8fafc;
-        border-radius: 15px;
-        padding: 2rem;
-        margin-bottom: 2rem;
-        border: 1px solid #e2e8f0;
+    .card-title i {
+        color: #4f46e5;
+        font-size: 1.25rem;
     }
     
     .form-label {
@@ -361,225 +429,217 @@
         display: flex;
         align-items: center;
         gap: 0.5rem;
+        font-size: 0.95rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
     }
     
     .form-label i {
-        color: #667eea;
-        font-size: 0.875rem;
+        color: #4f46e5;
+        font-size: 1rem;
     }
     
-    .form-control {
+    .form-control, .form-select {
         border: 2px solid #e5e7eb;
-        border-radius: 12px;
-        padding: 0.875rem 1rem;
+        border-radius: 15px;
+        padding: 1rem 1.25rem;
         font-size: 1rem;
         transition: all 0.3s ease;
-        background-color: white;
+        background-color: #f9fafb;
+        font-weight: 500;
     }
     
-    .form-control:focus {
-        border-color: #667eea;
-        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    .form-control:focus, .form-select:focus {
+        border-color: #4f46e5;
+        box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
         background-color: white;
         outline: none;
     }
     
-    .comments-list {
-        margin-top: 2rem;
+    .interactive-rating {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 1.5rem;
+        justify-content: center;
     }
     
-    .comments-count {
-        font-size: 1.125rem;
-        font-weight: 600;
-        color: #374151;
-        margin-bottom: 1.5rem;
-        padding-bottom: 1rem;
-        border-bottom: 2px solid #f1f5f9;
+    .interactive-rating .star {
+        font-size: 2rem;
+        color: #d1d5db;
+        cursor: pointer;
+        transition: all 0.2s ease;
     }
     
-    .comment-item {
-        background: white;
-        border-radius: 15px;
-        padding: 1.5rem;
-        margin-bottom: 1.5rem;
+    .interactive-rating .star:hover,
+    .interactive-rating .star.active {
+        color: #fbbf24;
+        transform: scale(1.1);
+    }
+    
+    .review-item {
+        padding: 2rem;
+        border-radius: 20px;
+        background: linear-gradient(135deg, #f8fafc, #f1f5f9);
         border: 1px solid #e2e8f0;
+        margin-bottom: 1.5rem;
         transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
     }
     
-    .comment-item:hover {
-        box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    .review-item::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 4px;
+        height: 100%;
+        background: linear-gradient(135deg, #4f46e5, #7c3aed);
+        transform: scaleY(0);
+        transition: transform 0.3s ease;
+    }
+    
+    .review-item:hover {
+        background: linear-gradient(135deg, #eef2ff, #e0e7ff);
+        border-color: #4f46e5;
         transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(79, 70, 229, 0.1);
     }
     
-    .comment-header {
+    .review-item:hover::before {
+        transform: scaleY(1);
+    }
+    
+    .review-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
         margin-bottom: 1rem;
-        padding-bottom: 0.75rem;
-        border-bottom: 1px solid #f1f5f9;
     }
     
-    .comment-author {
-        font-weight: 700;
-        color: #1e293b;
+    .reviewer-info {
         display: flex;
         align-items: center;
-        gap: 0.5rem;
+        gap: 1rem;
     }
     
-    .comment-author i {
-        color: #667eea;
+    .reviewer-avatar {
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, #4f46e5, #7c3aed);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 700;
+        font-size: 1.25rem;
     }
     
-    .comment-date {
+    .reviewer-name {
+        font-weight: 700;
+        color: #1e293b;
+        font-size: 1.1rem;
+    }
+    
+    .review-date {
         color: #64748b;
         font-size: 0.875rem;
+        font-weight: 500;
     }
     
-    .comment-content p {
+    .review-rating {
+        display: flex;
+        gap: 0.25rem;
+        margin-bottom: 1rem;
+    }
+    
+    .review-rating i {
+        font-size: 1.1rem;
+        color: #fbbf24;
+    }
+    
+    .review-rating i.fa-star-o {
+        color: #d1d5db;
+    }
+    
+    .review-comment {
         color: #374151;
         line-height: 1.6;
+        font-size: 1rem;
         margin: 0;
     }
     
-    .comment-actions {
-        display: flex;
-        gap: 0.75rem;
-        margin-top: 1rem;
-    }
-    
-    .btn-sm-custom {
-        padding: 0.5rem 1rem;
-        font-size: 0.875rem;
-        border-radius: 20px;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        border: none;
-        cursor: pointer;
-        text-decoration: none;
-        display: flex;
-        align-items: center;
-        gap: 0.25rem;
-    }
-    
-    .btn-edit {
-        background: #f59e0b;
-        color: white;
-        border: 2px solid #f59e0b;
-    }
-    
-    .btn-edit:hover {
-        background: #d97706;
-        border-color: #d97706;
-        transform: translateY(-1px);
-    }
-    
-    .btn-delete {
-        background: #ef4444;
-        color: white;
-        border: 2px solid #ef4444;
-    }
-    
-    .btn-delete:hover {
-        background: #dc2626;
-        border-color: #dc2626;
-        transform: translateY(-1px);
-    }
-    
-    .btn-success-custom {
-        background: #10b981;
-        color: white;
-        border: 2px solid #10b981;
-    }
-    
-    .btn-success-custom:hover {
-        background: #059669;
-        border-color: #059669;
-        transform: translateY(-1px);
-    }
-    
-    .btn-secondary-custom {
-        background: #6b7280;
-        color: white;
-        border: 2px solid #6b7280;
-    }
-    
-    .btn-secondary-custom:hover {
-        background: #4b5563;
-        border-color: #4b5563;
-        transform: translateY(-1px);
-    }
-    
-    .edit-comment-form {
-        background: #f8fafc;
-        border-radius: 12px;
-        padding: 1.5rem;
-        margin-top: 1rem;
-        border: 1px solid #e2e8f0;
-    }
-    
-    .empty-comments {
+    .empty-reviews {
         text-align: center;
         padding: 3rem 2rem;
         color: #64748b;
-        background: #f8fafc;
-        border-radius: 15px;
-        border: 1px solid #e2e8f0;
     }
     
-    .empty-comments i {
+    .empty-reviews i {
         font-size: 3rem;
         margin-bottom: 1rem;
         opacity: 0.5;
     }
     
+    .empty-reviews h4 {
+        color: #1e293b;
+        margin-bottom: 0.5rem;
+    }
+    
+    .success-alert {
+        background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+        border: 2px solid #6ee7b7;
+        color: #065f46;
+        padding: 1.5rem 2rem;
+        border-radius: 15px;
+        margin-bottom: 2rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        font-weight: 600;
+    }
+    
+    .success-alert i {
+        font-size: 1.25rem;
+        color: #059669;
+    }
+    
     @media (max-width: 768px) {
         .hero-title {
-            font-size: 2.5rem;
+            font-size: 2rem;
         }
         
-        .content-container {
-            margin: -2rem 1rem 2rem;
-        }
-        
-        .film-info-card {
-            padding: 1.5rem;
-            margin-top: 2rem;
+        .film-container {
+            margin: -2rem 1rem 0;
+            padding: 2rem;
+            border-radius: 25px;
         }
         
         .film-title {
-            font-size: 1.5rem;
-        }
-        
-        .film-title-header {
-            flex-direction: column;
-            gap: 1rem;
-            align-items: flex-start;
+            font-size: 2rem;
         }
         
         .action-buttons {
-            width: 100%;
+            flex-direction: column;
         }
         
         .btn-custom {
-            flex: 1;
             justify-content: center;
         }
         
-        .comments-section {
-            margin: 0 1rem;
-            padding: 1.5rem;
+        .rating-form-card, .reviews-card {
+            padding: 2rem;
         }
         
-        .comment-header {
+        .review-header {
             flex-direction: column;
             align-items: flex-start;
             gap: 0.5rem;
         }
         
-        .comment-actions {
-            flex-direction: column;
+        .interactive-rating {
+            justify-content: flex-start;
         }
     }
 </style>
@@ -593,357 +653,330 @@
                 Detail Film
             </h1>
             <p class="hero-subtitle">
-                Informasi lengkap tentang film pilihan Anda
+                Informasi lengkap tentang film dan ulasan dari pengguna lain
             </p>
         </div>
     </div>
 </div>
 
 <div class="container">
-    <div class="content-container">
+    <div class="film-container">
+        <!-- Success Alert -->
+        @if(session('success'))
+            <div class="success-alert">
+                <i class="fas fa-check-circle"></i>
+                {{ session('success') }}
+            </div>
+        @endif
+
         <div class="row">
-            <!-- Poster Section -->
-            <div class="col-md-4 mb-4">
-                <div class="film-poster">
+            <!-- Poster Column -->
+            <div class="col-lg-4 col-md-5 mb-4">
+                <div class="poster-container">
                     @if($film->poster)
-                        <img src="{{ asset('storage/' . $film->poster) }}" alt="{{ $film->title }}">
+                        <img src="{{ asset('storage/' . $film->poster) }}" 
+                             alt="{{ $film->title }}" 
+                             loading="lazy">
                     @else
-                        <div class="no-image-placeholder">
+                        <div class="no-poster">
                             <i class="fas fa-film"></i>
-                            <span>No Image Available</span>
+                            <span>No Poster Available</span>
                         </div>
                     @endif
                 </div>
             </div>
 
-            <!-- Film Info Section -->
-            <div class="col-md-8">
-                <div class="film-info-card">
-                    <div class="film-title-header">
-                        <div>
-                            <h2 class="film-title">{{ $film->title }}</h2>
-                            <div class="film-year">{{ $film->release_year }}</div>
+            <!-- Content Column -->
+            <div class="col-lg-8 col-md-7">
+                <h1 class="film-title">{{ $film->title }}</h1>
+                
+                <!-- Film Meta Information -->
+                <div class="film-meta">
+                    <div class="meta-item">
+                        <div class="meta-icon">
+                            <i class="fas fa-calendar-alt"></i>
                         </div>
-                        <div class="action-buttons">
-                            <a href="{{ route('films.edit', $film) }}" class="btn-custom btn-warning-custom">
-                                <i class="fas fa-edit"></i>
-                                Edit
-                            </a>
-                            <form action="{{ route('films.destroy', $film) }}" method="POST" class="d-inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn-custom btn-danger-custom" 
-                                        onclick="return confirm('Apakah Anda yakin ingin menghapus film {{ $film->title }}?')">
-                                    <i class="fas fa-trash"></i>
-                                    Hapus
-                                </button>
-                            </form>
+                        <div class="meta-content">
+                            <div class="meta-label">Tahun Rilis</div>
+                            <div class="meta-value">{{ $film->release_year }}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="meta-item">
+                        <div class="meta-icon">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <div class="meta-content">
+                            <div class="meta-label">Sutradara</div>
+                            <div class="meta-value">{{ $film->director }}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="meta-item">
+                        <div class="meta-icon">
+                            <i class="fas fa-tags"></i>
+                        </div>
+                        <div class="meta-content">
+                            <div class="meta-label">Genre</div>
+                            <div class="meta-value">{{ $film->genre }}</div>
                         </div>
                     </div>
 
-                    <div class="film-details">
-                        <div class="detail-item">
-                            <div class="detail-label">
-                                <i class="fas fa-user-tie"></i>
-                                Director:
+                    @if($film->categories->count() > 0)
+                        <div class="meta-item">
+                            <div class="meta-icon">
+                                <i class="fas fa-th-large"></i>
                             </div>
-                            <div class="detail-value">{{ $film->director }}</div>
-                        </div>
-                        
-                        <div class="detail-item">
-                            <div class="detail-label">
-                                <i class="fas fa-tags"></i>
-                                Genre:
+                            <div class="meta-content">
+                                <div class="meta-label">Kategori</div>
+                                <div class="meta-value">{{ $film->categories->pluck('name')->join(', ') }}</div>
                             </div>
-                            <div class="detail-value">{{ $film->genre }}</div>
                         </div>
-                        
-                        <div class="detail-item">
-                            <div class="detail-label">
-                                <i class="fas fa-calendar-alt"></i>
-                                Release Year:
-                            </div>
-                            <div class="detail-value">{{ $film->release_year }}</div>
+                    @endif
+                </div>
+
+                <!-- Rating Display -->
+                <div class="rating-section">
+                    <div class="rating-title">
+                        <i class="fas fa-star"></i>
+                        Rating Film
+                    </div>
+                    <div class="rating-display">
+                        <div class="rating-stars">
+                            @for($i = 1; $i <= 5; $i++)
+                                <i class="fas fa-star{{ $i <= round($film->average_rating ?? 0) ? '' : '-o' }}"></i>
+                            @endfor
                         </div>
+                        <div class="rating-number">{{ number_format($film->average_rating ?? 0, 1) }}</div>
                     </div>
-
-                    <div class="description-section">
-                        <h5 class="section-title">
-                            <i class="fas fa-file-alt"></i>
-                            Deskripsi
-                        </h5>
-                        <p class="description-text">{{ $film->description ?? 'Deskripsi film belum tersedia.' }}</p>
+                    <div class="rating-count">
+                        Berdasarkan {{ $film->ratings->count() }} ulasan
                     </div>
+                </div>
 
-                    <div class="categories-section">
-                        <h5 class="section-title">
-                            <i class="fas fa-list"></i>
-                            Kategori
-                        </h5>
-                        @forelse($film->categories as $category)
-                            <span class="category-badge">{{ $category->name }}</span>
-                        @empty
-                            <span class="text-muted">Tidak ada kategori</span>
-                        @endforelse
+                <!-- Description -->
+                <div class="description-section">
+                    <h3 class="section-title">
+                        <i class="fas fa-align-left"></i>
+                        Deskripsi Film
+                    </h3>
+                    <div class="description-text">
+                        {{ $film->description }}
                     </div>
+                </div>
 
-                    <div class="back-button">
-                        <a href="{{ route('films.index') }}" class="btn-primary-custom">
-                            <i class="fas fa-arrow-left"></i>
-                            Kembali ke Katalog
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    @auth
+                        <form action="{{ route('watchlist.store', $film) }}" method="POST" class="d-inline">
+                            @csrf
+                            <button type="submit" class="btn-custom btn-success-custom">
+                                <i class="fas fa-plus"></i>
+                                Tambah ke Watchlist
+                            </button>
+                        </form>
+                    @endauth
+                    
+                    @if(auth()->check() && auth()->user()->id === $film->user_id)
+                        <a href="{{ route('films.edit', $film) }}" class="btn-custom btn-warning-custom">
+                            <i class="fas fa-edit"></i>
+                            Edit Film
                         </a>
-                    </div>
+                        <form action="{{ route('films.destroy', $film) }}" method="POST" class="d-inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn-custom btn-danger-custom" 
+                                    onclick="return confirm('Apakah Anda yakin ingin menghapus film {{ $film->title }}?')">
+                                <i class="fas fa-trash"></i>
+                                Hapus Film
+                            </button>
+                        </form>
+                    @endif
+                    
+                    <a href="{{ route('films.index') }}" class="btn-custom btn-secondary-custom">
+                        <i class="fas fa-arrow-left"></i>
+                        Kembali ke Katalog
+                    </a>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Comments Section -->
-    <div class="comments-section">
-        <div class="comments-header">
-            <h5 class="comments-title">
-                <i class="fas fa-comments"></i>
-                Komentar
-            </h5>
-        </div>
-
-        <!-- Comment Form -->
-        <div class="comment-form">
-            <form action="{{ route('comments.store', $film) }}" method="POST">
-                @csrf
-                <div class="mb-3">
-                    <label for="name" class="form-label">
-                        <i class="fas fa-user"></i>
-                        Nama
-                    </label>
-                    <input type="text" name="name" class="form-control" required placeholder="Masukkan nama Anda">
-                </div>
-                <div class="mb-3">
-                    <label for="content" class="form-label">
-                        <i class="fas fa-comment"></i>
-                        Komentar
-                    </label>
-                    <textarea name="content" class="form-control" rows="3" required 
-                              placeholder="Bagikan pendapat Anda tentang film ini..."></textarea>
-                </div>
-                <button type="submit" class="btn-primary-custom">
-                    <i class="fas fa-paper-plane"></i>
-                    Kirim Komentar
-                </button>
-            </form>
-        </div>
-
-        <!-- Comments List -->
-        <div class="comments-list">
-            <h6 class="comments-count">{{ $comments->count() }} Komentar</h6>
-            
-            @forelse($comments as $comment)
-                <div class="comment-item" id="comment-{{ $comment->id }}">
-                    <div class="comment-header">
-                        <div class="comment-author">
-                            <i class="fas fa-user-circle"></i>
-                            {{ $comment->name }}
+        <!-- Rating Form -->
+        @auth
+            <div class="rating-form-card">
+                <h3 class="card-title">
+                    <i class="fas fa-star-half-alt"></i>
+                    Beri Rating untuk Film Ini
+                </h3>
+                <form action="{{ route('ratings.store', $film) }}" method="POST" id="ratingForm">
+                    @csrf
+                    <div class="mb-4">
+                        <label class="form-label">
+                            <i class="fas fa-star"></i>
+                            Rating Anda
+                        </label>
+                        <div class="interactive-rating" id="interactiveRating">
+                            @for($i = 1; $i <= 5; $i++)
+                                <i class="fas fa-star star" data-rating="{{ $i }}"></i>
+                            @endfor
                         </div>
-                        <div class="comment-date">{{ $comment->created_at->diffForHumans() }}</div>
+                        <input type="hidden" name="rating" id="ratingInput" required>
                     </div>
-
-                    <div class="comment-content">
-                        <p>{{ $comment->content }}</p>
+                    
+                    <div class="mb-4">
+                        <label for="comment" class="form-label">
+                            <i class="fas fa-comment"></i>
+                            Ulasan Anda (Opsional)
+                        </label>
+                        <textarea name="comment" 
+                                  id="comment" 
+                                  class="form-control" 
+                                  rows="4"
+                                  placeholder="Bagikan pendapat Anda tentang film ini..."></textarea>
                     </div>
+                    
+                    <button type="submit" class="btn-custom btn-primary-custom" id="submitRating" disabled>
+                        <i class="fas fa-paper-plane"></i>
+                        Kirim Rating
+                    </button>
+                </form>
+            </div>
+        @endauth
 
-                    <div class="comment-actions">
-                        <button class="btn-sm-custom btn-edit edit-comment-btn"
-                                data-comment-id="{{ $comment->id }}">
-                            <i class="fas fa-edit"></i>
-                            Edit
-                        </button>
-                        <form action="{{ route('comments.destroy', $comment) }}" method="POST" class="d-inline">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn-sm-custom btn-delete"
-                                    onclick="return confirm('Apakah Anda yakin ingin menghapus komentar ini?')">
-                                <i class="fas fa-trash"></i>
-                                Hapus
-                            </button>
-                        </form>
-                    </div>
-
-                    <!-- Edit Form -->
-                    <div class="edit-comment-form" id="edit-form-{{ $comment->id }}" style="display: none;">
-                        <form action="{{ route('comments.update', $comment) }}" method="POST">
-                            @csrf
-                            @method('PATCH')
-                            <div class="mb-3">
-                                <textarea name="content" class="form-control" rows="3" required>{{ $comment->content }}</textarea>
+        <!-- User Reviews -->
+        <div class="reviews-card">
+            <h3 class="card-title">
+                <i class="fas fa-comments"></i>
+                Ulasan Pengguna ({{ $film->ratings->count() }})
+            </h3>
+            
+            @forelse($film->ratings as $rating)
+                <div class="review-item">
+                    <div class="review-header">
+                        <div class="reviewer-info">
+                            <div class="reviewer-avatar">
+                                {{ strtoupper(substr($rating->user->name, 0, 1)) }}
                             </div>
-                            <div class="d-flex gap-2">
-                                <button type="submit" class="btn-sm-custom btn-success-custom">
-                                    <i class="fas fa-save"></i>
-                                    Simpan
-                                </button>
-                                <button type="button" class="btn-sm-custom btn-secondary-custom cancel-edit" 
-                                        data-comment-id="{{ $comment->id }}">
-                                    <i class="fas fa-times"></i>
-                                    Batal
-                                </button>
+                            <div>
+                                <div class="reviewer-name">{{ $rating->user->name }}</div>
+                                <div class="review-rating">
+                                    @for($i = 1; $i <= 5; $i++)
+                                        <i class="fas fa-star{{ $i <= $rating->rating ? '' : '-o' }}"></i>
+                                    @endfor
+                                </div>
                             </div>
-                        </form>
+                        </div>
+                        <div class="review-date">{{ $rating->created_at->diffForHumans() }}</div>
                     </div>
+                    
+                    @if($rating->comment)
+                        <p class="review-comment">{{ $rating->comment }}</p>
+                    @endif
                 </div>
             @empty
-                <div class="empty-comments">
+                <div class="empty-reviews">
                     <i class="fas fa-comment-slash"></i>
-                    <h6>Belum ada komentar</h6>
-                    <p>Belum ada komentar. Jadilah yang pertama berkomentar!</p>
+                    <h4>Belum Ada Ulasan</h4>
+                    <p>Jadilah yang pertama memberikan ulasan untuk film ini!</p>
                 </div>
             @endforelse
         </div>
     </div>
 </div>
 
-<!-- JavaScript untuk Edit Komentar -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const editButtons = document.querySelectorAll('.edit-comment-btn');
-    editButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const commentId = this.getAttribute('data-comment-id');
-            document.querySelector(`#comment-${commentId} .comment-content`).style.display = 'none';
-            document.querySelector(`#comment-${commentId} .comment-actions`).style.display = 'none';
-            document.querySelector(`#edit-form-${commentId}`).style.display = 'block';
+    // Interactive Rating System
+    const stars = document.querySelectorAll('.interactive-rating .star');
+    const ratingInput = document.getElementById('ratingInput');
+    const submitButton = document.getElementById('submitRating');
+    let selectedRating = 0;
+
+    stars.forEach((star, index) => {
+        star.addEventListener('mouseenter', function() {
+            highlightStars(index + 1);
+        });
+
+        star.addEventListener('mouseleave', function() {
+            highlightStars(selectedRating);
+        });
+
+        star.addEventListener('click', function() {
+            selectedRating = index + 1;
+            ratingInput.value = selectedRating;
+            highlightStars(selectedRating);
+            
+            if (submitButton) {
+                submitButton.disabled = false;
+            }
         });
     });
 
-    const cancelButtons = document.querySelectorAll('.cancel-edit');
-    cancelButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const commentId = this.getAttribute('data-comment-id');
-            document.querySelector(`#comment-${commentId} .comment-content`).style.display = 'block';
-            document.querySelector(`#comment-${commentId} .comment-actions`).style.display = 'flex';
-            document.querySelector(`#edit-form-${commentId}`).style.display = 'none';
+    function highlightStars(rating) {
+        stars.forEach((star, index) => {
+            if (index < rating) {
+                star.classList.add('active');
+            } else {
+                star.classList.remove('active');
+            }
         });
+    }
+
+    // Form submission with loading state
+    const ratingForm = document.getElementById('ratingForm');
+    if (ratingForm) {
+        ratingForm.addEventListener('submit', function() {
+            if (submitButton) {
+                submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengirim...';
+                submitButton.disabled = true;
+            }
+        });
+    }
+
+    // Smooth scroll to rating form when clicking rate button
+    const rateButtons = document.querySelectorAll('[data-action="rate"]');
+    rateButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const ratingForm = document.getElementById('ratingForm');
+            if (ratingForm) {
+                ratingForm.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    });
+
+    // Auto-expand textarea
+    const commentTextarea = document.getElementById('comment');
+    if (commentTextarea) {
+        commentTextarea.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = this.scrollHeight + 'px';
+        });
+    }
+
+    // Animate review items on scroll
+    const reviewItems = document.querySelectorAll('.review-item');
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+
+    reviewItems.forEach(item => {
+        item.style.opacity = '0';
+        item.style.transform = 'translateY(20px)';
+        item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(item);
     });
 });
 </script>
 
-@endsection
-
-                        <p>{{ $film->description }}</p>
-                    </div>
-
-                    <div class="mt-4">
-                        <h5>Kategori</h5>
-                        @foreach($film->categories as $category)
-                            <span class="badge bg-secondary">{{ $category->name }}</span>
-                        @endforeach
-                    </div>
-
-                    <div class="mt-4">
-                        <a href="{{ route('films.index') }}" class="btn btn-outline-primary">Kembali ke Katalog</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Komentar -->
-    <div class="mt-5">
-        <div class="card shadow-sm">
-            <div class="card-header bg-light">
-                <h5 class="mb-0">Komentar</h5>
-            </div>
-            <div class="card-body">
-
-                <!-- Form Tambah Komentar -->
-                <form action="{{ route('comments.store', $film) }}" method="POST">
-                    @csrf
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Nama</label>
-                        <input type="text" name="name" class="form-control" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="content" class="form-label">Komentar</label>
-                        <textarea name="content" class="form-control" rows="3" required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-outline-primary">Kirim Komentar</button>
-                </form>
-
-                <!-- Daftar Komentar -->
-                <div class="mt-4">
-                    <h6>{{ $comments->count() }} Komentar</h6>
-                    <hr>
-                    @if($comments->count() > 0)
-                        @foreach($comments as $comment)
-                            <div class="border rounded p-3 mb-3 bg-white" id="comment-{{ $comment->id }}">
-                                <div class="d-flex justify-content-between mb-2">
-                                    <strong>{{ $comment->name }}</strong>
-                                    <small class="text-muted">{{ $comment->created_at->diffForHumans() }}</small>
-                                </div>
-
-                                <div class="comment-content">
-                                    <p class="mb-2">{{ $comment->content }}</p>
-                                </div>
-
-                                <div class="comment-actions d-flex gap-2">
-                                    <button class="btn btn-sm btn-outline-primary edit-comment-btn"
-                                            data-comment-id="{{ $comment->id }}">
-                                        Edit
-                                    </button>
-                                    <form action="{{ route('comments.destroy', $comment) }}" method="POST" class="d-inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-outline-danger">Hapus</button>
-                                    </form>
-                                </div>
-
-                                <!-- Form Edit Komentar -->
-                                <div class="edit-comment-form mt-3" id="edit-form-{{ $comment->id }}" style="display: none;">
-                                    <form action="{{ route('comments.update', $comment) }}" method="POST">
-                                        @csrf
-                                        @method('PATCH')
-                                        <div class="mb-2">
-                                            <textarea name="content" class="form-control" rows="3" required>{{ $comment->content }}</textarea>
-                                        </div>
-                                        <div class="d-flex gap-2">
-                                            <button type="submit" class="btn btn-sm btn-success">Simpan</button>
-                                            <button type="button" class="btn btn-sm btn-secondary cancel-edit" data-comment-id="{{ $comment->id }}">Batal</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        @endforeach
-                    @else
-                        <p class="text-muted">Belum ada komentar. Jadilah yang pertama berkomentar!</p>
-                    @endif
-                </div>
-
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- JavaScript untuk Edit Komentar -->
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const editButtons = document.querySelectorAll('.edit-comment-btn');
-        editButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const commentId = this.getAttribute('data-comment-id');
-                document.querySelector(`#comment-${commentId} .comment-content`).style.display = 'none';
-                document.querySelector(`#comment-${commentId} .comment-actions`).style.display = 'none';
-                document.querySelector(`#edit-form-${commentId}`).style.display = 'block';
-            });
-        });
-
-        const cancelButtons = document.querySelectorAll('.cancel-edit');
-        cancelButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const commentId = this.getAttribute('data-comment-id');
-                document.querySelector(`#comment-${commentId} .comment-content`).style.display = 'block';
-                document.querySelector(`#comment-${commentId} .comment-actions`).style.display = 'flex';
-                document.querySelector(`#edit-form-${commentId}`).style.display = 'none';
-            });
-        });
-    });
-</script>
 @endsection
