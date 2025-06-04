@@ -85,5 +85,3 @@ jobs:
           app-name: 'UASPraktikumWEB2'
           slot-name: 'Production'
           package: .
-
-      
